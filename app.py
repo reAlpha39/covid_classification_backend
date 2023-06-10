@@ -97,6 +97,42 @@ async def predict_ctscan_resnet(file: UploadFile = File(...)):
         }
     }
 
+@app.post("/api/xray/vgg")
+async def predict_xray_vgg(file: UploadFile = File(...)):
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(await file.read())
+        temp_file.seek(0)
+
+    raw, class_label, confidence = predict_image_vgg(temp_file.name, model_xray_vgg)
+
+    os.remove(temp_file.name)
+
+    return {
+        "status": "success",
+        "data": {
+            "raw": raw,
+            "class_labe": class_label,
+            "confidence": confidence
+        }
+    }
+
+@app.post("/api/xray/resnet")
+async def predict_xray_resnet(file: UploadFile = File(...)):
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(await file.read())
+        temp_file.seek(0)
+
+    raw, result = predict_image_resnet(temp_file.name, model_xray_resnet)
+
+    os.remove(temp_file.name)
+
+    return {
+        "status": "success",
+        "data": {
+            "raw": raw,
+            "result": result
+        }
+    }
 
 if __name__ == "__main__":
     load_model()
