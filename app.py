@@ -15,7 +15,7 @@ model_xray_resnet = None
 # load model ML
 def load_model():
     global model_ctscan_vgg, model_ctscan_resnet, model_xray_vgg, model_xray_resnet
-    # model_ctscan_vgg = load_model('models/ctscan_vgg.h5')
+    model_ctscan_vgg = load_model('models/ct_vgg.h5')
     # model_ctscan_resnet = load_model('models/ctscan_resnet.h5')
     model_xray_vgg = load_model('models/xray_vgg.h5')
     # model_xray_resnet = load_model('models/xray_resnet.h5')
