@@ -22,22 +22,24 @@ def load_model():
 
 # predict image vgg
 def predict_image_vgg(image, model):
-    image = image.load_img(image, target_size=(512, 512))
+    image = image.load_img(image, target_size=(224, 224))
     image_array = image.img_to_array(image)
     image_array = np.expand_dims(image_array, axis=0)
     image_array /= 255.
 
     prediction = model.predict(image_array)
-    class_names = ['covid', 'noncovid']
-    predicted_class = np.argmax(prediction[0])
-    class_label = class_names[predicted_class]
-    confidence = prediction[0][predicted_class]
+    if prediction[1] > 0.5:
+        class_label = "COVID-19"
+        confidence = prediction[1]*100
+    else:
+        class_label = "non-COVID-19"
+        confidence = (1 - prediction[1])*100
 
 
     print("Predicted class:", class_label)
     print("Confidence:", confidence)
 
-    return prediction[0], class_label, confidence
+    return prediction, class_label, confidence
 
 
 def predict_image_resnet(image, model):
@@ -66,7 +68,7 @@ async def predict_ctscan_vgg(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, class_label, confidence = predict_ctscan_vgg(temp_file.name, model_ctscan_vgg)
+    raw, class_label, confidence = predict_image_vgg(temp_file.name, model_ctscan_vgg)
 
     os.remove(temp_file.name)
 
