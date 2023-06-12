@@ -14,13 +14,13 @@ RUN cp .env.example .env
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install dependency
+RUN composer install
+
 # Setup composer
 RUN php artisan key:generate
 RUN php artisan migrate
 RUN php artisan cache:clear && php artisan config:clear
-
-# Install dependency
-RUN composer install
 
 # Expose port 9000
 EXPOSE 9000
