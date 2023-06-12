@@ -1,5 +1,22 @@
 version: '3'
 services:
+  db:
+    image: mysql/mysql-server:latest
+    restart: always
+    cap_add:
+      - SYS_NICE
+    networks:
+      - internal_network
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASSWORD=root"
+      - "MYSQL_DATABASE=porcalabs"
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --max_connections=10000
+
   api:
     build: ./api
     image: api
@@ -15,6 +32,8 @@ services:
     restart: always
     networks:
       - internal_network
+    depends_on:
+      - db
     volumes:
       - web:/var/www/
 
@@ -51,3 +70,5 @@ networks:
 volumes:
   api:
   web:
+  db:
+    driver: local
