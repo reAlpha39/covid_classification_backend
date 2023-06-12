@@ -3,6 +3,9 @@ FROM php:8.1-fpm-alpine
 RUN mkdir -p /var/www
 WORKDIR /var/www
 
+# Install required packages
+RUN apk add --update --no-cache git
+
 # Clone project
 RUN git clone https://github.com/TheArKaID/porcadec/tree/Flowbite . --depth=1
 RUN cp .env.example .env
