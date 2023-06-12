@@ -7,7 +7,7 @@ WORKDIR /var/www
 RUN apk add --update --no-cache git
 
 # Clone project
-RUN git clone https://github.com/TheArKaID/porcadec/tree/Flowbite . --depth=1
+RUN git clone -b Flowbite https://github.com/TheArKaID/porcadec . --depth=1
 RUN cp .env.example .env
 
 # Install composer
