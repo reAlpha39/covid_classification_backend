@@ -1,11 +1,11 @@
-FROM python:3.9.17-alpine3.18
+FROM python:3.9.17-slim
 
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
 
 RUN pip install --upgrade pip
-RUN pip install tensorflow==2.12.0
+RUN pip install tensorflow
 RUN pip install -r requirements.txt
 
 COPY . .
