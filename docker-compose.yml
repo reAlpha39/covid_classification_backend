@@ -8,8 +8,6 @@ services:
       - internal_network
     volumes:
       - api:/main
-    depends_on:
-      - db
 
   web:
     build: ./web
