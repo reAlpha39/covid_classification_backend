@@ -16,12 +16,12 @@ model_xray_resnet = None
 def load_model():
     global model_ctscan_vgg, model_ctscan_resnet, model_xray_vgg, model_xray_resnet
     model_ctscan_vgg = load_model('models/ct_vgg.h5')
-    # model_ctscan_resnet = load_model('models/ctscan_resnet.h5')
+    model_ctscan_resnet = load_model('models/ct_resnet.h5')
     model_xray_vgg = load_model('models/xray_vgg.h5')
-    # model_xray_resnet = load_model('models/xray_resnet.h5')
+    model_xray_resnet = load_model('models/xray_resnet.h5')
 
 # predict image vgg
-def predict_image_vgg(image, model):
+def predict_image(image, model):
     image = image.load_img(image, target_size=(224, 224))
     image_array = image.img_to_array(image)
     image_array = np.expand_dims(image_array, axis=0)
@@ -42,21 +42,6 @@ def predict_image_vgg(image, model):
     return prediction, class_label, confidence
 
 
-def predict_image_resnet(image, model):
-    image = image.load_img(image, target_size=(512, 512))
-    image_array = image.img_to_array(image)
-    image_array = np.expand_dims(image_array, axis=0)
-    image_array /= 255.
-
-    prediction = model.predict(image_array)
-    result = ''
-    if prediction[0] >= 0.5:
-        result = "COVID"
-    else:
-        result = "non-COVID-19"
-    return prediction[0], result
-
-
 
 @app.get("/api")
 async def root():
@@ -68,7 +53,7 @@ async def predict_ctscan_vgg(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, class_label, confidence = predict_image_vgg(temp_file.name, model_ctscan_vgg)
+    raw, class_label, confidence = predict_image(temp_file.name, model_ctscan_vgg)
 
     os.remove(temp_file.name)
 
@@ -87,7 +72,7 @@ async def predict_ctscan_resnet(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, result = predict_image_resnet(temp_file.name, model_ctscan_resnet)
+    raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
 
     os.remove(temp_file.name)
 
@@ -95,7 +80,8 @@ async def predict_ctscan_resnet(file: UploadFile = File(...)):
         "status": "success",
         "data": {
             "raw": raw,
-            "result": result
+            "class_labe": class_label,
+            "confidence": confidence
         }
     }
 
@@ -105,7 +91,7 @@ async def predict_xray_vgg(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, class_label, confidence = predict_image_vgg(temp_file.name, model_xray_vgg)
+    raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
 
     os.remove(temp_file.name)
 
@@ -124,7 +110,7 @@ async def predict_xray_resnet(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, result = predict_image_resnet(temp_file.name, model_xray_resnet)
+    raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
 
     os.remove(temp_file.name)
 
@@ -132,7 +118,8 @@ async def predict_xray_resnet(file: UploadFile = File(...)):
         "status": "success",
         "data": {
             "raw": raw,
-            "result": result
+            "class_labe": class_label,
+            "confidence": confidence
         }
     }
 
