@@ -1,0 +1,55 @@
+version: '3'
+services:
+  api:
+    build: ./api
+    image: api
+    restart: always
+    networks:
+      - internal_network
+    volumes:
+      - api:/main
+    depends_on:
+      - db
+
+  web:
+    build: ./web
+    image: web
+    restart: always
+    networks:
+      - internal_network
+    volumes:
+      - web:/var/www/
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - internal_network
+    environment:
+      DOZZLE_NO_ANALYTICS: "true"
+      DOZZLE_BASE: /logs
+      DOZZLE_ADDR: "0.0.0.0:1212"
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - internal_network
+      - external_network
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - web:/var/www/
+    command: ["nginx", "-g", "daemon off;"]
+
+
+networks:
+  internal_network:
+  external_network:
+
+volumes:
+  api:
+  web:
