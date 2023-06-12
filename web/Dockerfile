@@ -4,14 +4,7 @@ RUN mkdir -p /var/www
 WORKDIR /var/www
 
 # Install required packages
-RUN apk add --update --no-cache \
-    git \
-    g++ \
-    libicu-dev \
-    libpq-dev \
-    libzip-dev \
-    zip \
-    zlib1g-dev
+RUN apk add --update --no-cache git
 
 # Clone project
 RUN git clone -b Flowbite https://github.com/TheArKaID/porcadec . --depth=1
