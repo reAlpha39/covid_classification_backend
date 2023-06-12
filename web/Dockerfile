@@ -7,6 +7,7 @@ WORKDIR /var/www
 RUN apk add --update --no-cache git
 
 # Clone project
+RUN rm -rf html
 RUN git clone -b Flowbite https://github.com/TheArKaID/porcadec . --depth=1
 RUN cp .env.example .env
 
