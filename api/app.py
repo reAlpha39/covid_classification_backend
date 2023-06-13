@@ -30,7 +30,8 @@ def predict_image(image_input, model):
     image_array /= 255.
 
     prediction = model.predict(image_array)
-    if prediction[1] > 0.5:
+    print(prediction)
+    if prediction[0] > 0.5:
         class_label = "COVID-19"
         confidence = prediction[1]*100
     else:
