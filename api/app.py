@@ -15,7 +15,6 @@ model_ctscan_resnet = None
 model_xray_vgg = None
 model_xray_resnet = None
 
-# load model ML
 def load_model_ml():
     global model_ctscan_vgg, model_ctscan_resnet, model_xray_vgg, model_xray_resnet
     model_ctscan_vgg = load_model('./models/ct_vgg.h5')
@@ -23,7 +22,6 @@ def load_model_ml():
     model_xray_vgg = load_model('./models/xray_vgg.h5')
     model_xray_resnet = load_model('./models/xray_resnet.h5')
 
-# predict image vgg
 def predict_image(image_input, model):
     img = image.load_img(image_input, target_size=(224, 224))
     image_array = image.img_to_array(img)
