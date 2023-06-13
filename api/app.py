@@ -23,7 +23,7 @@ def load_model_ml():
 
 # predict image vgg
 def predict_image(image, model):
-    image = image.load_img(image, target_size=(224, 224))
+    image = image.load_img(self.image, target_size=(224, 224))
     image_array = image.img_to_array(image)
     image_array = np.expand_dims(image_array, axis=0)
     image_array /= 255.
