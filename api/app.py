@@ -22,9 +22,9 @@ def load_model_ml():
     model_xray_resnet = load_model('./models/xray_resnet.h5')
 
 # predict image vgg
-def predict_image(image, model):
-    image = image.load_img(self.image, target_size=(224, 224))
-    image_array = image.img_to_array(image)
+def predict_image(image_input, model):
+    img = image.load_img(image_input, target_size=(224, 224))
+    image_array = image.img_to_array(img)
     image_array = np.expand_dims(image_array, axis=0)
     image_array /= 255.
 
