@@ -53,18 +53,18 @@ async def predict_ctscan_vgg(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, class_label, confidence = predict_image(temp_file.name, model_ctscan_vgg)
+        raw, class_label, confidence = predict_image(temp_file.name, model_ctscan_vgg)
 
-    os.remove(temp_file.name)
+        os.remove(temp_file.name)
 
-    return {
-        "status": "success",
-        "data": {
-            "raw": raw,
-            "class_labe": class_label,
-            "confidence": confidence
+        return {
+            "status": "success",
+            "data": {
+                "raw": raw,
+                "class_labe": class_label,
+                "confidence": confidence
+            }
         }
-    }
 
 @app.post("/ctscan/resnet")
 async def predict_ctscan_resnet(file: UploadFile = File(...)):
@@ -72,18 +72,18 @@ async def predict_ctscan_resnet(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
+        raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
 
-    os.remove(temp_file.name)
+        os.remove(temp_file.name)
 
-    return {
-        "status": "success",
-        "data": {
-            "raw": raw,
-            "class_labe": class_label,
-            "confidence": confidence
+        return {
+            "status": "success",
+            "data": {
+                "raw": raw,
+                "class_labe": class_label,
+                "confidence": confidence
+            }
         }
-    }
 
 @app.post("/xray/vgg")
 async def predict_xray_vgg(file: UploadFile = File(...)):
@@ -91,18 +91,18 @@ async def predict_xray_vgg(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
+        raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
 
-    os.remove(temp_file.name)
+        os.remove(temp_file.name)
 
-    return {
-        "status": "success",
-        "data": {
-            "raw": raw,
-            "class_labe": class_label,
-            "confidence": confidence
+        return {
+            "status": "success",
+            "data": {
+                "raw": raw,
+                "class_labe": class_label,
+                "confidence": confidence
+            }
         }
-    }
 
 @app.post("/xray/resnet")
 async def predict_xray_resnet(file: UploadFile = File(...)):
@@ -110,18 +110,18 @@ async def predict_xray_resnet(file: UploadFile = File(...)):
         temp_file.write(await file.read())
         temp_file.seek(0)
 
-    raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
+        raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
 
-    os.remove(temp_file.name)
+        os.remove(temp_file.name)
 
-    return {
-        "status": "success",
-        "data": {
-            "raw": raw,
-            "class_labe": class_label,
-            "confidence": confidence
+        return {
+            "status": "success",
+            "data": {
+                "raw": raw,
+                "class_labe": class_label,
+                "confidence": confidence
+            }
         }
-    }
 
 if __name__ == "__main__":
     load_model_ml()
