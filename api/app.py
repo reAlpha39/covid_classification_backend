@@ -43,11 +43,11 @@ def predict_image(image, model):
 
 
 
-@app.get("/api")
+@app.get("/")
 async def root():
     return {"message": "Hello World"}
 
-@app.post("/api/ctscan/vgg")
+@app.post("/ctscan/vgg")
 async def predict_ctscan_vgg(file: UploadFile = File(...)):
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(await file.read())
@@ -66,7 +66,7 @@ async def predict_ctscan_vgg(file: UploadFile = File(...)):
         }
     }
 
-@app.post("/api/ctscan/resnet")
+@app.post("/ctscan/resnet")
 async def predict_ctscan_resnet(file: UploadFile = File(...)):
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(await file.read())
@@ -85,7 +85,7 @@ async def predict_ctscan_resnet(file: UploadFile = File(...)):
         }
     }
 
-@app.post("/api/xray/vgg")
+@app.post("/xray/vgg")
 async def predict_xray_vgg(file: UploadFile = File(...)):
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(await file.read())
@@ -104,7 +104,7 @@ async def predict_xray_vgg(file: UploadFile = File(...)):
         }
     }
 
-@app.post("/api/xray/resnet")
+@app.post("/xray/resnet")
 async def predict_xray_resnet(file: UploadFile = File(...)):
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(await file.read())
