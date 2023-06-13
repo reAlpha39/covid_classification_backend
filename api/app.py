@@ -13,7 +13,7 @@ model_xray_vgg = None
 model_xray_resnet = None
 
 # load model ML
-def load_model():
+def load_model_ml():
     global model_ctscan_vgg, model_ctscan_resnet, model_xray_vgg, model_xray_resnet
     model_ctscan_vgg = load_model('./models/ct_vgg.h5')
     model_ctscan_resnet = load_model('./models/ct_resnet.h5')
@@ -124,5 +124,5 @@ async def predict_xray_resnet(file: UploadFile = File(...)):
     }
 
 if __name__ == "__main__":
-    load_model()
+    load_model_ml()
     uvicorn.run(app, host="0.0.0.0", port=5555)
