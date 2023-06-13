@@ -31,13 +31,13 @@ def predict_image(image_input, model):
 
     prediction = model.predict(image_array)
     print(prediction)
-    if prediction[0] > 0.5:
-        class_label = "COVID-19"
-        confidence = prediction[1]*100
-    else:
-        class_label = "non-COVID-19"
-        confidence = (1 - prediction[1])*100
-
+    for probability in prediction:
+        if probability[1] > 0.5:
+            class_label = "COVID-19"
+            confidence = prediction[1]*100
+        else:
+            class_label = "non-COVID-19"
+            confidence = (1 - prediction[1])*100
 
     print("Predicted class:", class_label)
     print("Confidence:", confidence)
