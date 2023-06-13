@@ -63,7 +63,7 @@ async def predict_ctscan_vgg(file: UploadFile = File(...)):
             "status": "success",
             "data": {
                 "raw": str(raw),
-                "class_labe": class_label,
+                "class_label": class_label,
                 "confidence": confidence
             }
         }
@@ -82,7 +82,7 @@ async def predict_ctscan_resnet(file: UploadFile = File(...)):
             "status": "success",
             "data": {
                 "raw": str(raw),
-                "class_labe": class_label,
+                "class_label": class_label,
                 "confidence": confidence
             }
         }
@@ -101,7 +101,7 @@ async def predict_xray_vgg(file: UploadFile = File(...)):
             "status": "success",
             "data": {
                 "raw": str(raw),
-                "class_labe": class_label,
+                "class_label": class_label,
                 "confidence": confidence
             }
         }
@@ -120,7 +120,7 @@ async def predict_xray_resnet(file: UploadFile = File(...)):
             "status": "success",
             "data": {
                 "raw": str(raw),
-                "class_labe": class_label,
+                "class_label": class_label,
                 "confidence": confidence
             }
         }
