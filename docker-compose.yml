@@ -26,16 +26,16 @@ services:
     volumes:
       - api:/main
 
-  web:
-    build: ./web
-    image: web
-    restart: always
-    networks:
-      - internal_network
-    depends_on:
-      - db
-    volumes:
-      - web:/var/www/
+  # web:
+  #   build: ./web
+  #   image: web
+  #   restart: always
+  #   networks:
+  #     - internal_network
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - web:/var/www/
 
   dozzle:
     image: amir20/dozzle:latest
