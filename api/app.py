@@ -16,11 +16,13 @@ model_xray_vgg = None
 model_xray_resnet = None
 
 def load_model_ml():
-    global model_ctscan_vgg, model_ctscan_resnet, model_xray_vgg, model_xray_resnet
+    global model_ctscan_vgg, model_ctscan_resnet, model_ctscan_inception, model_xray_vgg, model_xray_resnet, model_xray_inception
     model_ctscan_vgg = load_model('./models/ct_vgg.h5')
     model_ctscan_resnet = load_model('./models/ct_resnet.h5')
+    model_ctscan_inception = load_model('./models/ct_inception.h5')
     model_xray_vgg = load_model('./models/xray_vgg.h5')
     model_xray_resnet = load_model('./models/xray_resnet.h5')
+    # model_xray_inception = load_model('./models/xray_inception.h5')
 
 def predict_image(image_input, model):
     img = image.load_img(image_input, target_size=(224, 224))
@@ -75,6 +77,25 @@ async def predict_ctscan_resnet(file: UploadFile = File(...)):
         temp_file.seek(0)
 
         raw, class_label, confidence = predict_image(temp_file.name, model_xray_vgg)
+
+        os.remove(temp_file.name)
+
+        return {
+            "status": "success",
+            "data": {
+                "raw": str(raw),
+                "class_label": class_label,
+                "confidence": confidence
+            }
+        }
+
+@app.post("/ctscan/inception")
+async def predict_ctscan_inception(file: UploadFile = File(...)):
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(await file.read())
+        temp_file.seek(0)
+
+        raw, class_label, confidence = predict_image(temp_file.name, model_ctscan_inception)
 
         os.remove(temp_file.name)
 
