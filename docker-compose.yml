@@ -21,6 +21,8 @@ services:
       - db
     image: phpmyadmin:5.2.1-fpm-alpine
     restart: always
+    ports:
+      - 8080:8082
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: RootAA!23
@@ -42,6 +44,8 @@ services:
     image: wordpress:6.2.2-fpm-alpine
     restart: always
     volumes: ['./wordpress/:/var/www/html']
+    ports:
+      - 8080:8081
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: user
