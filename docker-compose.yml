@@ -2,16 +2,16 @@ version: '3'
 services:
   # Database #
   db:
-    image: mysql/mysql-server:latest
+    image: mysql/mysql-server::8.0.33-debian
     restart: always
     cap_add:
       - SYS_NICE
     networks:
       - internal_network
     environment:
-      - "MYSQL_ROOT_PASSWORD=PPorca_Labs001"
+      - "MYSQL_ROOT_PASSWORD=root"
       - "MYSQL_USER=root"
-      - "MYSQL_PASSWORD=PPorca_Labs001"
+      - "MYSQL_PASSWORD=root"
       - "MYSQL_DATABASE=porcalabs"
     volumes:
       - db:/var/lib/mysql
