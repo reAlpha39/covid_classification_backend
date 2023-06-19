@@ -26,6 +26,7 @@ services:
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: RootAA!23
+      PMA_ABSOLUTE_URI: https://serv.porcalabs.com/phpmyadmin/
     networks:
       - internal_network
       - external_network
