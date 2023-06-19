@@ -23,7 +23,7 @@ services:
   phpmyadmin:
     links:
       - db:db
-    image: phpmyadmin:5.2.1-fpm-alpine
+    image: phpmyadmin:5.2.1-apache
     restart: always
     environment:
       PMA_HOST: db
