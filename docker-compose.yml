@@ -73,6 +73,8 @@ services:
     depends_on:
       - db
       - wordpress
+    networks:
+      - internal_network
   # web:
   #   build: ./web
   #   image: web
@@ -106,8 +108,8 @@ services:
       - external_network
     volumes:
       - ./nginx/conf/:/etc/nginx/conf.d/:ro
-      - web:/var/www/
-      - ./wordpress/:/var/www/html
+      # - web:/var/www/
+      - ./wp-app:/var/www/html
       - ./certbot/www:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
     command: ["nginx", "-g", "daemon off;"]
