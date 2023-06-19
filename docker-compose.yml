@@ -43,7 +43,7 @@ services:
       - api:/main
   # WordPress #
   wordpress:
-    image: wordpress:6.2.2-fpm-alpine
+    image: wordpress:6.2.2-php8.1-fpm-alpine
     restart: always
     ports:
         - '9000:9000'
