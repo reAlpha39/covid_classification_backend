@@ -46,7 +46,7 @@ services:
     image: wordpress:6.2.2-php8.1-apache
     restart: always
     ports:
-        - '9000:80'
+        - '9001:80'
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./wp-app:/var/www/html
