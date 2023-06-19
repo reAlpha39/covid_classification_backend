@@ -46,7 +46,7 @@ services:
     ports:
       - '8000:80'
     restart: always
-    volumes: ['./:/var/www/html']
+    volumes: ['./wordpress/:/var/www/html']
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: root
