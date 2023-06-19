@@ -1,22 +1,35 @@
 version: '3'
 services:
-  # db:
-  #   image: mysql/mysql-server:latest
-  #   restart: always
-  #   cap_add:
-  #     - SYS_NICE
-  #   networks:
-  #     - internal_network
-  #   environment:
-  #     - "MYSQL_ROOT_PASSWORD=root"
-  #     - "MYSQL_USER=root"
-  #     - "MYSQL_PASSWORD=root"
-  #     - "MYSQL_DATABASE=porcalabs"
-  #   volumes:
-  #     - db:/var/lib/mysql
-  #     - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-  #   command: --max_connections=10000
-
+  # Database #
+  db:
+    image: mysql/mysql-server:latest
+    restart: always
+    cap_add:
+      - SYS_NICE
+    networks:
+      - internal_network
+    environment:
+      - "MYSQL_ROOT_PASSWORD=PPorca_Labs001"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASSWORD=PPorca_Labs001"
+      - "MYSQL_DATABASE=porcalabs"
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  # Phpmyadmin #
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin:5.2.1-fpm-alpine
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: PPorca_Labs001
+    networks:
+      - internal_network
+  # API #
   api:
     build: ./api
     image: api
@@ -25,7 +38,21 @@ services:
       - internal_network
     volumes:
       - api:/main
-
+  # WordPress #
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:6.2.2-fpm-alpine
+    ports:
+      - '8000:80'
+    restart: always
+    volumes: ['./:/var/www/html']
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: PPorca_Labs001
+    networks:
+      - internal_network
   # web:
   #   build: ./web
   #   image: web
@@ -36,7 +63,7 @@ services:
   #     - db
   #   volumes:
   #     - web:/var/www/
-
+  # Dozzle #
   dozzle:
     image: amir20/dozzle:latest
     volumes:
@@ -47,7 +74,7 @@ services:
       DOZZLE_NO_ANALYTICS: "true"
       DOZZLE_BASE: /logs
       DOZZLE_ADDR: "0.0.0.0:1212"
-
+  # Nginx #
   nginx:
     image: nginx:latest
     restart: always
@@ -63,7 +90,7 @@ services:
       - ./certbot/www:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
     command: ["nginx", "-g", "daemon off;"]
-
+  # Certbot #
   certbot:
     image: certbot/certbot:latest
     volumes:
