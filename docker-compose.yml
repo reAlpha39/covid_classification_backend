@@ -71,6 +71,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - internal_network
+      - external_network
     environment:
       DOZZLE_NO_ANALYTICS: "true"
       DOZZLE_BASE: /logs
