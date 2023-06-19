@@ -28,6 +28,7 @@ services:
       MYSQL_ROOT_PASSWORD: RootAA!23
     networks:
       - internal_network
+      - external_network
   # API #
   api:
     build: ./api
@@ -52,6 +53,7 @@ services:
       WORDPRESS_DB_PASSWORD: RootAA!23
     networks:
       - internal_network
+      - external_network
   # web:
   #   build: ./web
   #   image: web
