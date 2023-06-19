@@ -45,6 +45,8 @@ services:
   wordpress:
     image: wordpress:6.2.2-fpm-alpine
     restart: always
+    ports:
+        - '9000:9000'
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./wp-app:/var/www/html
