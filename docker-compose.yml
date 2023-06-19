@@ -21,15 +21,12 @@ services:
       - db
     image: phpmyadmin:5.2.1-fpm-alpine
     restart: always
-    ports:
-      - 8081:80
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: RootAA!23
       PMA_ABSOLUTE_URI: https://serv.porcalabs.com/phpmyadmin/
     networks:
       - internal_network
-      - external_network
   # API #
   api:
     build: ./api
@@ -46,15 +43,12 @@ services:
     image: wordpress:6.2.2-fpm-alpine
     restart: always
     volumes: ['./wordpress/:/var/www/html']
-    ports:
-      - 8080:80
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: user
       WORDPRESS_DB_PASSWORD: RootAA!23
     networks:
       - internal_network
-      - external_network
   # web:
   #   build: ./web
   #   image: web
@@ -72,7 +66,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - internal_network
-      - external_network
     environment:
       DOZZLE_NO_ANALYTICS: "true"
       DOZZLE_BASE: /logs
