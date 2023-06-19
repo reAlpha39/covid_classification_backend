@@ -43,10 +43,10 @@ services:
       - api:/main
   # WordPress #
   wordpress:
-    image: wordpress:6.2.2-php8.1-fpm-alpine
+    image: wordpress:6.2.2-php8.1-apache
     restart: always
     ports:
-        - '9000:9000'
+        - '8080:80'
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./wp-app:/var/www/html
