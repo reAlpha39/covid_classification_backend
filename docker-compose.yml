@@ -30,7 +30,7 @@ services:
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: RootAA!23
       UPLOAD_LIMIT: 50M
-      PMA_ABSOLUTE_URI: https://serv.porcalabs.com/phpmyadmin/
+      PMA_ABSOLUTE_URI: https://storysight.id/phpmyadmin/
     networks:
       - internal_network
   # API #
